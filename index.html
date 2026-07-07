@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta | Gabriela Bestetti — Ana | Automações e IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        base: '#1f1f23',
+                        'base-card': '#27273a',
+                        'base-card2': '#2e2250',
+                        purple: '#5a28b9',
+                        'purple-mid': '#ac78ed',
+                        'purple-light': '#ded2ff',
+                        offwhite: '#eeeeee',
+                        snow: '#fefefe',
+                    },
+                    fontFamily: {
+                        serif: ['DM Serif Display', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        hand: ['Reenie Beanie', 'cursive'],
+                    },
+                    borderRadius: {
+                        'organic': '40px',
+                        'organic-lg': '64px',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.18;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px 200px;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: #1f1f23;
+            color: #fefefe;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .label-ui {
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+        }
+        .label-ui-lg {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+        .hand-underline { position: relative; display: inline-block; }
+        .hand-underline svg { position: absolute; bottom: -8px; left: -4px; width: calc(100% + 8px); height: 14px; }
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-children > * { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
+        .reveal-children.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(3) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(4) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(5) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+        .philosophy-card {
+            background: #27273a;
+            color: #fefefe;
+            transition: background 500ms ease, color 500ms ease;
+        }
+        .philosophy-card:hover {
+            background: #5a28b9;
+            color: #fefefe;
+        }
+        .philosophy-card .card-icon { transition: color 500ms ease; color: #ac78ed; }
+        .philosophy-card:hover .card-icon { color: #ded2ff; }
+        .philosophy-card .card-number { transition: opacity 500ms ease, color 500ms ease; color: #ac78ed; }
+        .philosophy-card:hover .card-number { color: #ded2ff; opacity: 0.6; }
+        .philosophy-card p, .philosophy-card li { color: rgba(255,255,255,0.75); }
+        .philosophy-card:hover p, .philosophy-card:hover li { color: rgba(255,255,255,0.9); }
+        .philosophy-card h3 { color: #fefefe; }
+        .philosophy-card:hover h3 { color: #fefefe; }
+        .philosophy-card .label-ui { color: rgba(172,120,237,0.7) !important; }
+        .philosophy-card:hover .label-ui { color: rgba(222,210,255,0.8) !important; }
+        .price-old {
+            position: relative;
+            color: #fefefe;
+            opacity: 0.4;
+        }
+        .price-old::after {
+            content: '';
+            position: absolute;
+            left: -4px; right: -4px;
+            top: 50%;
+            height: 3px;
+            background: #5a28b9;
+            transform: rotate(-3deg);
+            border-radius: 2px;
+        }
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%; right: 50%;
+            height: 3px;
+            background: #ac78ed;
+            border-radius: 2px;
+            transition: left 0.3s ease, right 0.3s ease;
+        }
+        .nav-link:hover::after { left: 0; right: 0; }
+        .gallery-scroll { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .gallery-scroll::-webkit-scrollbar { display: none; }
+        .gallery-scroll > * { scroll-snap-align: start; }
+        .glow-top { position: relative; overflow: hidden; }
+        .glow-top::before {
+            content: '';
+            position: absolute;
+            top: -60px; left: 50%;
+            transform: translateX(-50%);
+            width: 400px; height: 200px;
+            background: rgba(172,120,237,0.2);
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .btn-pill { border-radius: 999px; transition: background 0.4s ease, color 0.4s ease, transform 0.3s ease; }
+        .btn-pill:hover { transform: scale(1.04); }
+        .timeline-line { position: absolute; left: 23px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #ac78ed, transparent); }
+        @media (max-width: 768px) { .nav-links { display: none !important; } .mobile-menu-btn { display: flex !important; } }
+        @media (min-width: 769px) { .mobile-menu-btn { display: none !important; } .mobile-nav-panel { display: none !important; } }
+        .section-gap { padding-top: 160px; padding-bottom: 0; }
+        @media (max-width: 768px) { .section-gap { padding-top: 100px; } }
+        .annotation-arrow { animation: arrow-bob 2.5s ease-in-out infinite; }
+        @keyframes arrow-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+        ::selection { background: #5a28b9; color: #fefefe; }
+        .chat-bubble {
+            background: #27273a;
+            border: 1px solid rgba(172,120,237,0.25);
+            border-radius: 18px 18px 18px 4px;
+            padding: 16px 20px;
+            max-width: 380px;
+            position: relative;
+        }
+        .garantia-badge {
+            background: linear-gradient(135deg, rgba(90,40,185,0.15), rgba(172,120,237,0.1));
+            border: 1px solid rgba(172,120,237,0.3);
+            border-radius: 20px;
+            padding: 20px 24px;
+        }
+        .garantia-badge-green {
+            background: linear-gradient(135deg, rgba(34,197,94,0.12), rgba(172,120,237,0.08));
+            border: 1px solid rgba(74,222,128,0.35);
+            border-radius: 20px;
+            padding: 20px 24px;
+        }
+        .styled-table th, .styled-table td { vertical-align: top; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- NAVIGATION -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" style="background: rgba(31,31,35,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between" style="height:80px;">
+            <div class="flex items-center gap-6">
+                <div class="hidden md:block w-px h-6" style="background:rgba(172,120,237,0.2)"></div>
+                <a href="#hero" class="font-serif italic text-xl tracking-tight" style="color:#ac78ed">Ana | Automações e IA</a>
+            </div>
+            <div class="nav-links hidden md:flex items-center gap-8">
+                <a href="#diagnostico" class="nav-link label-ui hover:text-white transition-colors" style="color:rgba(255,255,255,0.5)">Diagnóstico</a>
+                <a href="#pilares" class="nav-link label-ui hover:text-white transition-colors" style="color:rgba(255,255,255,0.5)">Solução</a>
+                <a href="#portfolio" class="nav-link label-ui hover:text-white transition-colors" style="color:rgba(255,255,255,0.5)">Portfólio</a>
+                <a href="#cronograma" class="nav-link label-ui hover:text-white transition-colors" style="color:rgba(255,255,255,0.5)">Cronograma</a>
+                <a href="#investimento" class="nav-link label-ui hover:text-white transition-colors" style="color:rgba(255,255,255,0.5)">Investimento</a>
+                <a href="#proximos-passos" class="nav-link label-ui hover:text-white transition-colors" style="color:rgba(255,255,255,0.5)">Próximos Passos</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#investimento" class="btn-pill hidden md:inline-block px-6 py-2.5 label-ui" style="background:#5a28b9;color:#fefefe;">Ver Proposta</a>
+                <button onclick="toggleMobileNav()" class="mobile-menu-btn items-center justify-center w-10 h-10 rounded-full transition-colors" style="color:#ac78ed">
+                    <svg id="menu-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <line x1="3" y1="6" x2="17" y2="6"/><line x1="3" y1="10" x2="17" y2="10"/><line x1="3" y1="14" x2="17" y2="14"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-nav" class="mobile-nav-panel hidden backdrop-blur-xl border-t" style="background:rgba(31,31,35,0.97);border-color:rgba(172,120,237,0.15)">
+            <div class="flex flex-col items-center gap-6 py-10 px-6">
+                <a href="#diagnostico" onclick="closeMobileNav()" class="label-ui-lg hover:text-white" style="color:rgba(255,255,255,0.6)">Diagnóstico</a>
+                <a href="#pilares" onclick="closeMobileNav()" class="label-ui-lg hover:text-white" style="color:rgba(255,255,255,0.6)">Solução</a>
+                <a href="#portfolio" onclick="closeMobileNav()" class="label-ui-lg hover:text-white" style="color:rgba(255,255,255,0.6)">Portfólio</a>
+                <a href="#cronograma" onclick="closeMobileNav()" class="label-ui-lg hover:text-white" style="color:rgba(255,255,255,0.6)">Cronograma</a>
+                <a href="#investimento" onclick="closeMobileNav()" class="label-ui-lg hover:text-white" style="color:rgba(255,255,255,0.6)">Investimento</a>
+                <a href="#proximos-passos" onclick="closeMobileNav()" class="label-ui-lg hover:text-white" style="color:rgba(255,255,255,0.6)">Próximos Passos</a>
+                <div class="w-12 h-px my-2" style="background:rgba(172,120,237,0.2)"></div>
+                <a href="#investimento" onclick="closeMobileNav()" class="btn-pill px-8 py-3 label-ui" style="background:#5a28b9;color:#fefefe;">Ver Proposta</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero" class="min-h-screen flex flex-col justify-center px-6 md:px-10 pt-24 pb-16 max-w-7xl mx-auto">
+        <div class="reveal">
+            <p class="label-ui mb-8" style="color:rgba(172,120,237,0.7)">Proposta Comercial &mdash; Julho 2026</p>
+            <h1 class="font-serif leading-[0.88] tracking-tight mb-10">
+                <span class="italic block text-[clamp(28px,5vw,72px)]" style="color:rgba(255,255,255,0.45)">Ecossistema Intencional</span>
+                <span class="block text-[clamp(48px,10vw,140px)]" style="color:#fefefe">
+                    <span class="hand-underline" style="color:#ac78ed">Plataforma
+                        <svg viewBox="0 0 300 14" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                            <path d="M2 10C60 4 130 14 180 6C220 0 260 11 298 5" stroke="#ac78ed" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                </span>
+                <span class="italic block text-[clamp(36px,7vw,100px)]" style="color:rgba(255,255,255,0.5)">sob medida.</span>
+            </h1>
+        </div>
+        <div class="reveal mt-20 flex flex-wrap gap-x-12 gap-y-4 border-t pt-8" style="border-color:rgba(172,120,237,0.15);transition-delay:0.35s;">
+            <div>
+                <p class="label-ui mb-1" style="color:rgba(172,120,237,0.5)">Para</p>
+                <p class="font-sans text-sm font-medium">Gabriela Bestetti &mdash; Ecossistema Intencional</p>
+            </div>
+            <div>
+                <p class="label-ui mb-1" style="color:rgba(172,120,237,0.5)">De</p>
+                <p class="font-sans text-sm font-medium">Ana | Automações e IA</p>
+            </div>
+            <div>
+                <p class="label-ui mb-1" style="color:rgba(172,120,237,0.5)">Data</p>
+                <p class="font-sans text-sm font-medium">06 de Julho de 2026</p>
+            </div>
+            <div>
+                <p class="label-ui mb-1" style="color:rgba(172,120,237,0.5)">Condição válida até</p>
+                <p class="font-sans text-sm font-medium">20 de Julho de 2026</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIAGNÓSTICO -->
+    <section id="diagnostico" class="section-gap px-6 md:px-10 max-w-7xl mx-auto">
+        <div class="reveal">
+            <p class="label-ui mb-4" style="color:#5a28b9">01 &mdash; Diagnóstico</p>
+            <h2 class="font-serif italic text-[clamp(36px,6vw,80px)] leading-[0.92] tracking-tight max-w-4xl mb-16" style="color:#fefefe">
+                O que está espalhado<br class="hidden md:block">
+                não se gerencia
+                <span class="hand-underline" style="color:#ac78ed"> direito.
+                    <svg viewBox="0 0 200 14" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                        <path d="M2 8C50 9.5 100 -2 150 7C175 12 188 3 198 6" stroke="#ac78ed" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                </span>
+            </h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 reveal-children">
+            <!-- Card 1 -->
+            <div class="philosophy-card rounded-organic p-8 md:p-10 flex flex-col justify-between min-h-[280px] cursor-default">
+                <div>
+                    <div class="card-icon mb-6">
+                        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16v4H4zM4 12h10v4H4zM4 20h6"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-serif italic text-2xl mb-3">"A jornada da aluna está espalhada — e o que está espalhado, não se gerencia"</h3>
+                </div>
+                <p class="font-sans text-sm font-light leading-relaxed" style="opacity:0.7">
+                    Hoje a informação de cada aluna fica em planilhas, conversas soltas e memória de quem atende. Não existe um lugar único que mostre em que ponto da jornada cada aluna está.
+                </p>
+            </div>
+            <!-- Card 2 -->
+            <div class="philosophy-card rounded-organic p-8 md:p-10 flex flex-col justify-between min-h-[280px] cursor-default md:translate-y-8">
+                <div>
+                    <div class="card-icon mb-6">
+                        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-serif italic text-2xl mb-3">"O Customer Success não tem um indicador claro da saúde da aluna"</h3>
+                </div>
+                <p class="font-sans text-sm font-light leading-relaxed" style="opacity:0.7">
+                    Sem um Health Score ou indicadores de engajamento centralizados, o acompanhamento depende de percepção, não de dado.
+                </p>
+            </div>
+            <!-- Card 3 -->
+            <div class="philosophy-card rounded-organic p-8 md:p-10 flex flex-col justify-between min-h-[280px] cursor-default">
+                <div>
+                    <div class="card-icon mb-6">
+                        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-serif italic text-2xl mb-3">"As datas de renovação estão no Notion, mas o alerta não é automático"</h3>
+                </div>
+                <p class="font-sans text-sm font-light leading-relaxed" style="opacity:0.7">
+                    Hoje é preciso checar manualmente para não perder o prazo de contato com a aluna — não existe lembrete automático.
+                </p>
+            </div>
+            <!-- Card 4 -->
+            <div class="philosophy-card rounded-organic p-8 md:p-10 flex flex-col justify-between min-h-[280px] cursor-default md:translate-y-8">
+                <div>
+                    <div class="card-icon mb-6">
+                        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="12" cy="18" r="3"/><path d="M6 9v3a3 3 0 0 0 3 3h1M18 9v3a3 3 0 0 1-3 3h-1"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-serif italic text-2xl mb-3">"Financeiro, CRM de leads e operação não conversam entre si"</h3>
+                </div>
+                <p class="font-sans text-sm font-light leading-relaxed" style="opacity:0.7">
+                    Cada frente funciona isolada, o que gera trabalho manual redobrado e dificulta a visão consolidada da operação.
+                </p>
+            </div>
+            <!-- Card 5 -->
+            <div class="philosophy-card rounded-organic p-8 md:p-10 flex flex-col justify-between min-h-[280px] cursor-default md:col-span-2">
+                <div>
+                    <div class="card-icon mb-6">
+                        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-serif italic text-2xl mb-3">"Não existe um painel único com os indicadores estratégicos do negócio"</h3>
+                </div>
+                <p class="font-sans text-sm font-light leading-relaxed max-w-2xl" style="opacity:0.7">
+                    Saber quantas alunas estão ativas, a taxa de renovação e o resultado financeiro do mês ainda depende de levantamento manual.
+                </p>
+            </div>
+        </div>
+
+        <!-- Objetivo -->
+        <div class="reveal mt-20 rounded-organic-lg p-10 md:p-16" style="background:#27273a;transition-delay:0.1s;">
+            <p class="label-ui mb-6" style="color:#5a28b9">O Objetivo</p>
+            <p class="font-serif italic text-2xl md:text-4xl leading-snug max-w-4xl" style="color:#fefefe">
+                A meta é substituir a gestão descentralizada por
+                <strong class="not-italic font-serif" style="color:#ac78ed">uma plataforma única</strong>, onde cada aluna, cada indicador e cada decisão têm
+                <strong class="not-italic font-serif" style="color:#ac78ed">um lugar certo para existir</strong>.
+            </p>
+        </div>
+    </section>
+
+    <!-- SOLUÇÃO -->
+    <section id="pilares" class="section-gap px-6 md:px-10 max-w-7xl mx-auto">
+        <div class="reveal">
+            <p class="label-ui mb-4" style="color:#5a28b9">02 &mdash; A Solução</p>
+            <h2 class="font-serif italic text-[clamp(36px,6vw,80px)] leading-[0.92] tracking-tight max-w-5xl mb-6" style="color:#fefefe">
+                <span class="hand-underline" style="color:#ac78ed">5 Módulos
+                    <svg viewBox="0 0 240 14" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                        <path d="M2 9C60 2 130 13 190 5C215 1 228 10 238 7" stroke="#ac78ed" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                </span> em uma plataforma só
+            </h2>
+            <p class="font-sans text-lg font-light mb-12" style="color:rgba(255,255,255,0.55);max-width:40rem">
+                Um SaaS personalizado — desenvolvido sob medida para a operação real do Ecossistema Intencional, não um sistema genérico adaptado à força.
+            </p>
+        </div>
+
+        <!-- Por que uma plataforma própria -->
+        <div class="reveal mb-16 rounded-organic-lg p-8 md:p-12" style="background:#27273a;border:1px solid rgba(172,120,237,0.2)">
+            <p class="label-ui mb-6" style="color:#5a28b9">Por que uma plataforma própria, e não uma colcha de retalhos de ferramentas soltas</p>
+            <p class="font-sans font-light leading-relaxed max-w-3xl" style="color:rgba(255,255,255,0.65)">
+                Uma plataforma feita sob medida cresce junto com o negócio, em vez de virar mais um obstáculo conforme a base de alunas aumenta.
+            </p>
+        </div>
+
+        <!-- Perfis de Acesso -->
+        <div class="reveal mb-16 rounded-organic-lg p-8 md:p-12" style="background:#27273a;border:1px solid rgba(172,120,237,0.2)">
+            <p class="label-ui mb-6" style="color:#5a28b9">Perfis de Acesso</p>
+            <div class="grid sm:grid-cols-2 gap-x-8 gap-y-5">
+                <p class="font-sans text-sm font-light leading-relaxed" style="color:rgba(255,255,255,0.7)"><strong class="font-medium" style="color:#ded2ff">Administrador:</strong> gestão completa da plataforma, dashboards, usuários, configurações, relatórios, contratos e formulários.</p>
+                <p class="font-sans text-sm font-light leading-relaxed" style="color:rgba(255,255,255,0.7)"><strong class="font-medium" style="color:#ded2ff">Customer Success:</strong> acompanhamento das alunas, reuniões, tarefas, observações, indicadores e renovações.</p>
+                <p class="font-sans text-sm font-light leading-relaxed" style="color:rgba(255,255,255,0.7)"><strong class="font-medium" style="color:#ded2ff">Mentor:</strong> acompanhamento das alunas, planejamento, tarefas e observações.</p>
+                <p class="font-sans text-sm font-light leading-relaxed" style="color:rgba(255,255,255,0.7)"><strong class="font-medium" style="color:#ded2ff">Aluna:</strong> atualização do perfil, financeiro, CRM de leads, calendário, metas, tarefas e acesso à GabIA (externa).</p>
+            </div>
+        </div>
+
+        <!-- 5 Módulos -->
+        <div class="space-y-8 reveal-children">
+
+            <!-- Módulo 1 -->
+            <div class="philosophy-card rounded-organic p-8 md:p-12 cursor-default group">
+                <div class="flex flex-col md:flex-row md:items-start gap-6 md:gap-12">
+                    <div class="flex-shrink-0">
+                        <span class="card-number font-serif text-6xl md:text-8xl opacity-20 leading-none">01</span>
+                    </div>
+                    <div class="flex-1">
+                        <p class="label-ui mb-3" style="opacity:0.5;color:inherit">Módulo 1</p>
+                        <h3 class="font-serif italic text-2xl md:text-4xl mb-6 leading-tight">Raio-X Completo da Aluna</h3>
+                        <ul class="space-y-2.5">
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Cadastro completo (dados pessoais, mentoria e diagnóstico inicial)
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Onboarding com checklist, pendências e próximos passos
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Posicionamento (Método, 3D, COV, Avatar, Promessa, Oferta e Comunicação)
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Esteira de Produtos
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Jornada Comercial
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Metas (Meta x Realizado)
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Gestão de Tarefas
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Documentos e arquivos
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo 2 -->
+            <div class="philosophy-card rounded-organic p-8 md:p-12 cursor-default group">
+                <div class="flex flex-col md:flex-row md:items-start gap-6 md:gap-12">
+                    <div class="flex-shrink-0">
+                        <span class="card-number font-serif text-6xl md:text-8xl opacity-20 leading-none">02</span>
+                    </div>
+                    <div class="flex-1">
+                        <p class="label-ui mb-3" style="opacity:0.5;color:inherit">Módulo 2</p>
+                        <h3 class="font-serif italic text-2xl md:text-4xl mb-6 leading-tight">Operação da Aluna</h3>
+                        <ul class="space-y-2.5">
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Financeiro com cadastro manual de vendas e gráficos
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                CRM de Leads com pipeline, temperatura, tags, histórico e follow-up
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Calendário mensal
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Formulários (onboarding, planejamento, feedback, renovação)
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Networking entre alunas
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Botão de acesso à GabIA (externa)
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Integração com Google Calendar e Outlook Calendar, com sincronização bidirecional
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Visualização diária, semanal e mensal
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Geração automática de convites e atualização automática dos eventos
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Lembretes por e-mail e notificações
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo 3 -->
+            <div class="philosophy-card rounded-organic p-8 md:p-12 cursor-default group">
+                <div class="flex flex-col md:flex-row md:items-start gap-6 md:gap-12">
+                    <div class="flex-shrink-0">
+                        <span class="card-number font-serif text-6xl md:text-8xl opacity-20 leading-none">03</span>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-3">
+                            <p class="label-ui" style="opacity:0.5;color:inherit">Módulo 3 &mdash; O coração da proposta</p>
+                        </div>
+                        <h3 class="font-serif italic text-2xl md:text-4xl mb-6 leading-tight">Customer Success</h3>
+                        <ul class="space-y-2.5">
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Dashboard com KPIs: retenção, churn, renovação, upsell, NPS, Health Score e engajamento
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Health Score calculado automaticamente
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Painel de risco com alunas críticas
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Tags administrativas e observações internas
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Controle de calls
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Alertas automáticos, incluindo aviso 30 dias antes do vencimento de cada renovação
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Fila de prioridade
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Controle e pipeline de renovação
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Linha do tempo completa da jornada da aluna
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Sistema de conquistas
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo 4 -->
+            <div class="philosophy-card rounded-organic p-8 md:p-12 cursor-default group">
+                <div class="flex flex-col md:flex-row md:items-start gap-6 md:gap-12">
+                    <div class="flex-shrink-0">
+                        <span class="card-number font-serif text-6xl md:text-8xl opacity-20 leading-none">04</span>
+                    </div>
+                    <div class="flex-1">
+                        <p class="label-ui mb-3" style="opacity:0.5;color:inherit">Módulo 4</p>
+                        <h3 class="font-serif italic text-2xl md:text-4xl mb-6 leading-tight">Business Intelligence</h3>
+                        <ul class="space-y-2.5">
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Dashboards: Geral, Financeiro, Comercial, Customer Success, Execução e Engajamento
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Relatórios exportáveis por aluna, turma, produto, mentor, CS e período
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Módulo 5 -->
+            <div class="philosophy-card rounded-organic p-8 md:p-12 cursor-default group">
+                <div class="flex flex-col md:flex-row md:items-start gap-6 md:gap-12">
+                    <div class="flex-shrink-0">
+                        <span class="card-number font-serif text-6xl md:text-8xl opacity-20 leading-none">05</span>
+                    </div>
+                    <div class="flex-1">
+                        <p class="label-ui mb-3" style="opacity:0.5;color:inherit">Módulo 5</p>
+                        <h3 class="font-serif italic text-2xl md:text-4xl mb-6 leading-tight">Administração da Plataforma</h3>
+                        <ul class="space-y-2.5">
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Gestão de usuários
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Configurações de produtos, turmas, nichos, pipeline, formulários e modelos
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Auditoria completa
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Importação em lote (CSV/Excel)
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light">
+                                <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed;opacity:0.7"></span>
+                                Arquitetura preparada para integrações futuras
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- O que Muda na Prática -->
+        <div class="reveal mt-20 rounded-organic-lg p-10 md:p-16" style="background:#27273a;transition-delay:0.1s;">
+            <p class="label-ui mb-6" style="color:#5a28b9">O que Muda na Prática</p>
+            <p class="font-serif italic text-xl md:text-3xl leading-snug max-w-4xl mb-6" style="color:#fefefe">
+                Em um único painel: Health Score de cada aluna, renovações dos próximos 30 dias e resultado financeiro do mês, sem levantamento manual.
+            </p>
+            <p class="font-serif italic text-xl md:text-3xl leading-snug max-w-4xl" style="color:#fefefe">
+                Na conversa de renovação, o histórico da aluna sustenta o argumento — não a
+                <strong class="not-italic font-serif" style="color:#ac78ed">memória de quem atende</strong>.
+            </p>
+        </div>
+    </section>
+
+    <!-- PORTFÓLIO -->
+    <section id="portfolio" class="section-gap px-6 md:px-10 max-w-7xl mx-auto">
+        <div class="reveal">
+            <p class="label-ui mb-4" style="color:#5a28b9">03 &mdash; Portfólio</p>
+            <h2 class="font-serif italic text-[clamp(36px,6vw,80px)] leading-[0.92] tracking-tight max-w-4xl mb-6" style="color:#fefefe">
+                Quem já
+                <span class="hand-underline" style="color:#ac78ed">confia
+                    <svg viewBox="0 0 220 14" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                        <path d="M2 9C55 2 120 13 175 5C195 1 208 10 218 7" stroke="#ac78ed" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                </span> e o que já construí
+            </h2>
+        </div>
+
+        <!-- Mentoras do universo -->
+        <div class="reveal-children grid md:grid-cols-2 gap-6 mb-6">
+            <div class="philosophy-card rounded-organic p-8 md:p-10">
+                <p class="label-ui mb-6" style="color:rgba(172,120,237,0.7)">Mentoras e negócios do seu universo</p>
+                <ul class="space-y-4">
+                    <li class="font-sans text-sm font-light" style="opacity:0.8"><strong class="font-serif italic not-italic font-medium" style="opacity:1">Aline Zanoni</strong> — Mentora de Arquitetos: Lançamentos e Customer Success</li>
+                    <li class="font-sans text-sm font-light" style="opacity:0.8"><strong class="font-serif italic not-italic font-medium" style="opacity:1">Sam Jolen</strong> — Especialista em PNL: Lançamentos, Agentes de IA e Customer Success</li>
+                    <li class="font-sans text-sm font-light" style="opacity:0.8"><strong class="font-serif italic not-italic font-medium" style="opacity:1">Malu Celestino</strong> — Mentora de Criadoras de Conteúdo: Funil Perpétuo</li>
+                    <li class="font-sans text-sm font-light" style="opacity:0.8"><strong class="font-serif italic not-italic font-medium" style="opacity:1">Rafa Xavier</strong> — Mentora de Trancistas: Lançamentos e Funil Perpétuo</li>
+                </ul>
+            </div>
+            <div class="philosophy-card rounded-organic p-8 md:p-10">
+                <p class="label-ui mb-6" style="color:rgba(172,120,237,0.7)">Outros negócios que também confiam no meu trabalho</p>
+                <p class="font-sans text-sm font-light leading-loose" style="opacity:0.8">
+                    <strong class="font-medium" style="opacity:1">Ellevari</strong> (Consultoria Empresarial) &middot;
+                    <strong class="font-medium" style="opacity:1">Amanda Pareto</strong> (Advogada Previdenciária) &middot;
+                    <strong class="font-medium" style="opacity:1">Conect3</strong> (Agência de Marketing) &middot;
+                    <strong class="font-medium" style="opacity:1">Delicê</strong> (Confeitaria Gourmet)
+                </p>
+            </div>
+        </div>
+
+        <!-- Capacidade técnica -->
+        <div class="reveal rounded-organic-lg p-8 md:p-12" style="background:#27273a;border:1px solid rgba(172,120,237,0.2)">
+            <p class="label-ui mb-8" style="color:#5a28b9">Capacidade técnica: SaaS próprios já em operação</p>
+            <div class="overflow-x-auto">
+                <table class="w-full font-sans text-sm styled-table">
+                    <thead>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.2)">
+                            <th class="text-left py-3 pr-6 font-medium label-ui" style="color:rgba(172,120,237,0.6)">Plataforma</th>
+                            <th class="text-left py-3 font-medium label-ui" style="color:rgba(172,120,237,0.6)">O que faz</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-4 pr-6 font-serif italic text-base"><a href="https://sentry3d.vercel.app/" target="_blank" rel="noopener" style="color:#ac78ed;text-decoration:underline">Sentry 3D</a></td>
+                            <td class="py-4 font-light" style="color:rgba(255,255,255,0.7)">Monitoramento de infraestrutura (sites, APIs, servidores) em tempo real, com interface 3D interativa, telemetria contínua, histórico de incidentes e alertas de expiração de domínio</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-4 pr-6 font-serif italic text-base"><a href="https://www.speedrdo.com.br/" target="_blank" rel="noopener" style="color:#ac78ed;text-decoration:underline">Speed RDO</a></td>
+                            <td class="py-4 font-light" style="color:rgba(255,255,255,0.7)">Relatório Diário de Obra preenchido por comando de voz com IA, com assinatura digital integrada — usado por equipes de construção civil direto do canteiro</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-4 pr-6 font-serif italic text-base"><a href="https://recordagerenciamento.vercel.app/" target="_blank" rel="noopener" style="color:#ac78ed;text-decoration:underline">Recorda Gerenciamento</a></td>
+                            <td class="py-4 font-light" style="color:rgba(255,255,255,0.7)">CRM multi-inquilino para agências de software gerenciarem contratos, recorrências, setups e despesas de infraestrutura dos próprios clientes</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-4 pr-6 font-serif italic text-base"><a href="https://bolaocopa-nvgo.vercel.app/" target="_blank" rel="noopener" style="color:#ac78ed;text-decoration:underline">Bolão Copa 2026</a></td>
+                            <td class="py-4 font-light" style="color:rgba(255,255,255,0.7)">Plataforma corporativa de bolão com sincronização de resultados via API em tempo real, prêmios customizados e ranking ao vivo</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 pr-6 font-serif italic text-base"><a href="https://nr1-turbo.vercel.app/" target="_blank" rel="noopener" style="color:#ac78ed;text-decoration:underline">NR1Turbo</a></td>
+                            <td class="py-4 font-light" style="color:rgba(255,255,255,0.7)">SaaS de gestão de riscos psicossociais (NR-1): avaliações, indicadores, treinamentos, planos de ação e evidências para PMEs</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- CRONOGRAMA -->
+    <section id="cronograma" class="section-gap">
+        <div class="px-6 md:px-10 max-w-7xl mx-auto">
+            <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+                <div>
+                    <p class="label-ui mb-4" style="color:#5a28b9">04 — Cronograma</p>
+                    <h2 class="font-serif italic text-[clamp(36px,6vw,80px)] leading-[0.92] tracking-tight" style="color:#fefefe">
+                        70 dias para
+                        <span class="hand-underline" style="color:#ac78ed">virar a chave
+                            <svg viewBox="0 0 300 14" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                                <path d="M2 7C70 12 140 1 210 9C250 12 275 4 298 6" stroke="#ac78ed" stroke-width="4" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                    </h2>
+                </div>
+                <div class="hidden md:flex items-center gap-3">
+                    <button onclick="scrollGallery(-1)" class="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300" style="border-color:rgba(172,120,237,0.25);color:#ac78ed" onmouseover="this.style.background='#5a28b9';this.style.color='#fefefe'" onmouseout="this.style.background='transparent';this.style.color='#ac78ed'">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 2L4 8l6 6"/></svg>
+                    </button>
+                    <button onclick="scrollGallery(1)" class="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300" style="border-color:rgba(172,120,237,0.25);color:#ac78ed" onmouseover="this.style.background='#5a28b9';this.style.color='#fefefe'" onmouseout="this.style.background='transparent';this.style.color='#ac78ed'">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 2l6 6-6 6"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="relative">
+            <div class="hidden md:block absolute left-0 top-0 bottom-0 w-20 pointer-events-none" style="background:linear-gradient(to right,#1f1f23,transparent);z-index:10"></div>
+            <div class="hidden md:block absolute right-0 top-0 bottom-0 w-20 pointer-events-none" style="background:linear-gradient(to left,#1f1f23,transparent);z-index:10"></div>
+
+            <div id="timeline-gallery" class="gallery-scroll flex gap-6 px-6 md:px-10 pb-4">
+                <!-- Fase 1 -->
+                <div class="flex-shrink-0 w-[85vw] md:w-[420px]">
+                    <div class="rounded-organic-lg p-8 md:p-10 min-h-[380px] flex flex-col justify-between relative overflow-hidden" style="background:#27273a">
+                        <div class="absolute top-6 right-6">
+                            <span class="label-ui px-4 py-2 rounded-full" style="background:rgba(90,40,185,0.2);color:rgba(172,120,237,0.7);font-size:9px;">D+7</span>
+                        </div>
+                        <div>
+                            <p class="font-serif text-7xl opacity-10 mb-4 leading-none" style="color:#ac78ed">01</p>
+                            <h3 class="font-serif italic text-3xl md:text-4xl mb-2" style="color:#fefefe">Alinhamento e Mapeamento</h3>
+                            <div class="w-12 h-0.5 mb-6" style="background:#5a28b9"></div>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.6)">
+                                <span class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background:#ac78ed"></span>
+                                Reunião de alinhamento técnico
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.6)">
+                                <span class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background:#ac78ed"></span>
+                                Mapeamento completo dos fluxos atuais
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.6)">
+                                <span class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background:#ac78ed"></span>
+                                Definição de prioridades e acessos necessários
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Fase 2 -->
+                <div class="flex-shrink-0 w-[85vw] md:w-[420px]">
+                    <div class="rounded-organic-lg p-8 md:p-10 min-h-[380px] flex flex-col justify-between relative overflow-hidden" style="background:#27273a">
+                        <div class="absolute top-6 right-6">
+                            <span class="label-ui px-4 py-2 rounded-full" style="background:rgba(90,40,185,0.2);color:rgba(172,120,237,0.7);font-size:9px;">D+30</span>
+                        </div>
+                        <div>
+                            <p class="font-serif text-7xl opacity-10 mb-4 leading-none" style="color:#ac78ed">02</p>
+                            <h3 class="font-serif italic text-3xl md:text-4xl mb-2" style="color:#fefefe">CRM &amp; Operação da Aluna</h3>
+                            <div class="w-12 h-0.5 mb-6" style="background:#5a28b9"></div>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.6)">
+                                <span class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background:#ac78ed"></span>
+                                Módulos 1 e 2 desenvolvidos e testados
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.6)">
+                                <span class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background:#ac78ed"></span>
+                                Cadastro, jornada e metas
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.6)">
+                                <span class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background:#ac78ed"></span>
+                                Calendário com sincronização bidirecional
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Fase 3 -->
+                <div class="flex-shrink-0 w-[85vw] md:w-[420px]">
+                    <div class="rounded-organic-lg p-8 md:p-10 min-h-[380px] flex flex-col justify-between relative overflow-hidden" style="background:#27273a">
+                        <div class="absolute top-6 right-6">
+                            <span class="label-ui px-4 py-2 rounded-full" style="background:rgba(90,40,185,0.2);color:rgba(172,120,237,0.7);font-size:9px;">D+55</span>
+                        </div>
+                        <div>
+                            <p class="font-serif text-7xl opacity-10 mb-4 leading-none" style="color:#ac78ed">03</p>
+                            <h3 class="font-serif italic text-3xl md:text-4xl mb-2" style="color:#fefefe">CS &amp; Business Intelligence</h3>
+                            <div class="w-12 h-0.5 mb-6" style="background:#5a28b9"></div>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.6)">
+                                <span class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background:#ac78ed"></span>
+                                Módulos 3 e 4 desenvolvidos
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.6)">
+                                <span class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background:#ac78ed"></span>
+                                Health Score e gestão de renovações
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.6)">
+                                <span class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background:#ac78ed"></span>
+                                Painéis e relatórios gerenciais
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Fase 4 -->
+                <div class="flex-shrink-0 w-[85vw] md:w-[420px]">
+                    <div class="rounded-organic-lg p-8 md:p-10 min-h-[380px] flex flex-col justify-between relative overflow-hidden" style="background:#27273a">
+                        <div class="absolute top-6 right-6">
+                            <span class="label-ui px-4 py-2 rounded-full" style="background:rgba(90,40,185,0.2);color:rgba(172,120,237,0.7);font-size:9px;">D+60</span>
+                        </div>
+                        <div>
+                            <p class="font-serif text-7xl opacity-10 mb-4 leading-none" style="color:#ac78ed">04</p>
+                            <h3 class="font-serif italic text-3xl md:text-4xl mb-2" style="color:#fefefe">Administração &amp; Testes</h3>
+                            <div class="w-12 h-0.5 mb-6" style="background:#5a28b9"></div>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.6)">
+                                <span class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background:#ac78ed"></span>
+                                Módulo 5 implementado
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.6)">
+                                <span class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background:#ac78ed"></span>
+                                Testes de ponta a ponta
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.6)">
+                                <span class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background:#ac78ed"></span>
+                                Ajustes finos e validação com você e a equipe
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Fase 5 -->
+                <div class="flex-shrink-0 w-[85vw] md:w-[420px]">
+                    <div class="rounded-organic-lg p-8 md:p-10 min-h-[380px] flex flex-col justify-between relative overflow-hidden text-snow" style="background:#5a28b9">
+                        <div class="absolute top-6 right-6">
+                            <span class="label-ui px-4 py-2 rounded-full" style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:9px;">D+70</span>
+                        </div>
+                        <div>
+                            <p class="font-serif text-7xl opacity-20 mb-4 leading-none">05</p>
+                            <h3 class="font-serif italic text-3xl md:text-4xl mb-2">Entrada em Operação</h3>
+                            <div class="w-12 h-0.5 mb-6" style="background:rgba(255,255,255,0.3)"></div>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.7)">
+                                <span class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background:rgba(255,255,255,0.5)"></span>
+                                Plataforma completa ao vivo
+                            </li>
+                            <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.7)">
+                                <span class="w-1 h-1 rounded-full mt-2 flex-shrink-0" style="background:rgba(255,255,255,0.5)"></span>
+                                Acompanhamento próximo na primeira semana de uso real
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex-shrink-0 w-6 md:w-10"></div>
+            </div>
+        </div>
+
+        <div class="px-6 md:px-10 max-w-7xl mx-auto">
+            <p class="reveal font-sans text-xs font-light mt-8" style="color:rgba(255,255,255,0.35)">Prazos podem ser ajustados conforme a complexidade de integração de cada fonte de dados atual. Qualquer alteração de escopo é conversada antes de impactar o cronograma.</p>
+        </div>
+    </section>
+
+    <!-- INVESTIMENTO -->
+    <section id="investimento" class="section-gap px-6 md:px-10 max-w-7xl mx-auto">
+        <div class="reveal">
+            <p class="label-ui mb-4" style="color:#5a28b9">05 — Investimento</p>
+            <h2 class="font-serif italic text-[clamp(36px,6vw,80px)] leading-[0.92] tracking-tight max-w-4xl mb-6" style="color:#fefefe">
+                Condições
+                <span class="hand-underline" style="color:#ac78ed">comerciais
+                    <svg viewBox="0 0 300 14" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                        <path d="M2 10C50 3 120 13 190 5C240 0 270 11 298 7" stroke="#ac78ed" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                </span>
+            </h2>
+        </div>
+
+        <!-- Cálculo de referência -->
+        <div class="reveal mb-6 rounded-organic-lg p-8 md:p-12" style="background:#27273a;border:1px solid rgba(172,120,237,0.2)">
+            <p class="label-ui mb-6" style="color:rgba(172,120,237,0.6)">Como cheguei ao valor de referência</p>
+            <p class="font-sans text-sm font-light mb-8 max-w-2xl" style="color:rgba(255,255,255,0.6)">
+                Modelo de licenciamento por usuário, prática comum em SaaS deste porte:
+            </p>
+            <div class="overflow-x-auto mb-8">
+                <table class="w-full font-sans text-sm styled-table">
+                    <tbody>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-3 pr-6 font-light" style="color:rgba(255,255,255,0.65)">Alunas ativas (máximo)</td>
+                            <td class="py-3 font-light text-right" style="color:rgba(255,255,255,0.8)">60</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-3 pr-6 font-light" style="color:rgba(255,255,255,0.65)">Usuários administrativos (equipe da mentoria)</td>
+                            <td class="py-3 font-light text-right" style="color:rgba(255,255,255,0.8)">6</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.2)">
+                            <td class="py-3 pr-6 font-medium" style="color:#ded2ff">Total de usuários</td>
+                            <td class="py-3 font-medium text-right" style="color:#ded2ff">66</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-3 pr-6 font-light" style="color:rgba(255,255,255,0.65)">Valor de referência por usuário/mês</td>
+                            <td class="py-3 font-light text-right" style="color:rgba(255,255,255,0.8)">R$ 27,00</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-3 pr-6 font-light" style="color:rgba(255,255,255,0.65)">Período de referência</td>
+                            <td class="py-3 font-light text-right" style="color:rgba(255,255,255,0.8)">12 meses</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 pr-6 font-medium" style="color:#ac78ed">Valor de referência total</td>
+                            <td class="py-3 font-medium text-right" style="color:#ac78ed">66 × R$ 27,00 × 12 = R$ 21.384,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="font-sans text-xs font-light mb-8 max-w-2xl italic" style="color:rgba(255,255,255,0.45)">Usei 60 alunas como pico máximo para este cálculo — sei que o número de alunas simultâneas pode ser maior, o que tornaria o valor de referência ainda mais alto.</p>
+            <p class="label-ui mb-4" style="color:rgba(172,120,237,0.6)">O que o mercado pratica</p>
+            <p class="font-sans text-sm font-light leading-relaxed max-w-3xl" style="color:rgba(255,255,255,0.55)">
+                Para você conferir com sua própria análise, a fonte é o <a href="https://stripe.com/br/guides/atlas/business-of-saas" target="_blank" class="underline" style="color:#ac78ed">guia oficial de modelo de negócios SaaS da Stripe</a>: plataformas SaaS vendidas em modelo consultivo (com contato pessoal — o mesmo formato desta proposta) para pequenas e médias empresas têm valor médio de contrato (ACV) tipicamente entre US$ 6.000 e US$ 15.000 no primeiro ano. Convertendo, nosso valor de referência de R$ 21.384 (≈ US$ 3.900 a US$ 4.300, a depender do câmbio) fica <strong style="color:#ded2ff">abaixo até do piso</strong> dessa faixa praticada internacionalmente — ou seja, o cálculo por licenciamento usado aqui já nasce conservador frente ao que o mercado cobra por esse tipo de solução.
+            </p>
+        </div>
+
+        <!-- Condição comercial -->
+        <div class="reveal mb-6 rounded-organic-lg p-8 md:p-12 relative overflow-hidden" style="background:#5a28b9">
+            <div class="absolute -top-16 -right-16 w-48 h-48 rounded-full" style="background:rgba(172,120,237,0.15)"></div>
+            <p class="label-ui mb-4" style="color:rgba(255,255,255,0.5)">Sua condição comercial</p>
+            <p class="font-sans font-light leading-relaxed mb-8 max-w-2xl" style="color:rgba(255,255,255,0.75)">
+                Considerando que essa implementação usa uma infraestrutura otimizada e uma estrutura de custos enxuta — e reconhecendo a confiança de você me contratar diretamente, de dentro da sua própria operação, para tocar esse projeto — o valor de implementação para o Ecossistema Intencional é:
+            </p>
+            <div class="flex flex-wrap items-baseline gap-4 mb-2">
+                <s class="price-old font-serif text-2xl md:text-3xl" style="color:#fefefe">R$ 21.384,00</s>
+                <span class="font-serif italic text-4xl md:text-6xl" style="color:#fefefe">R$ 10.997,00</span>
+            </div>
+            <p class="font-sans text-xs font-light mt-2 max-w-xl" style="color:rgba(255,255,255,0.55)">(quase metade do valor de referência, calculado com base nos dois parâmetros acima)</p>
+            <p class="font-sans text-xs font-light mt-6" style="color:rgba(255,255,255,0.45)">Condição válida à vista, ou em condições de parcelamento a definir em conversa direta entre nós — proposta válida até <strong style="color:#ded2ff">20/07/2026</strong>.</p>
+        </div>
+
+        <!-- Mensalidade -->
+        <div class="reveal rounded-organic-lg p-8 md:p-10 relative overflow-hidden" style="background:#2e2250;border:1px solid rgba(172,120,237,0.25)">
+            <div class="md:flex md:items-center md:justify-between md:gap-12 mb-8">
+                <div class="flex-1">
+                    <p class="label-ui mb-4" style="color:rgba(172,120,237,0.6)">Mensalidade</p>
+                    <p class="font-sans text-sm font-light leading-relaxed max-w-xl" style="color:rgba(255,255,255,0.65)">
+                        Referente exclusivamente aos custos de ferramentas e infraestrutura necessários para a plataforma funcionar. Suporte evolutivo e novas funcionalidades não estão incluídos aqui.
+                    </p>
+                </div>
+                <div class="mt-8 md:mt-0 md:flex-shrink-0 md:text-right">
+                    <p class="font-serif italic text-4xl md:text-5xl" style="color:#ded2ff">R$ 300<span class="text-xl font-sans font-light" style="color:rgba(255,255,255,0.4)">/mês</span></p>
+                </div>
+            </div>
+            <p class="label-ui mb-4" style="color:rgba(172,120,237,0.5)">Infraestrutura recomendada</p>
+            <div class="overflow-x-auto mb-4">
+                <table class="w-full font-sans text-sm styled-table">
+                    <thead>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.2)">
+                            <th class="text-left py-2 pr-6 font-medium label-ui" style="color:rgba(172,120,237,0.6)">Ferramenta</th>
+                            <th class="text-left py-2 pr-6 font-medium label-ui" style="color:rgba(172,120,237,0.6)">Função</th>
+                            <th class="text-left py-2 font-medium label-ui" style="color:rgba(172,120,237,0.6)">Custo</th>
+                        </tr>
+                    </thead>
+                    <tbody style="color:rgba(255,255,255,0.7)">
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-2.5 pr-6 font-medium" style="color:#ded2ff">Vercel</td>
+                            <td class="py-2.5 pr-6 font-light">Hospedagem</td>
+                            <td class="py-2.5 font-light">Gratuito (no início)</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-2.5 pr-6 font-medium" style="color:#ded2ff">Supabase Pro</td>
+                            <td class="py-2.5 pr-6 font-light">Banco de dados, autenticação e storage</td>
+                            <td class="py-2.5 font-light">US$ 25/mês</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-2.5 pr-6 font-medium" style="color:#ded2ff">Domínio próprio</td>
+                            <td class="py-2.5 pr-6 font-light">Endereço da plataforma</td>
+                            <td class="py-2.5 font-light">Até R$ 80/ano</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-2.5 pr-6 font-medium" style="color:#ded2ff">Resend</td>
+                            <td class="py-2.5 pr-6 font-light">Envio de e-mails</td>
+                            <td class="py-2.5 font-light">Gratuito (no início)</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-2.5 pr-6 font-medium" style="color:#ded2ff">Sentry</td>
+                            <td class="py-2.5 pr-6 font-light">Monitoramento de erros</td>
+                            <td class="py-2.5 font-light">Gratuito</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-2.5 pr-6 font-medium" style="color:#ded2ff">PostHog</td>
+                            <td class="py-2.5 pr-6 font-light">Analytics</td>
+                            <td class="py-2.5 font-light">Gratuito</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(172,120,237,0.1)">
+                            <td class="py-2.5 pr-6 font-medium" style="color:#ded2ff">Google Calendar API / Microsoft Graph API</td>
+                            <td class="py-2.5 pr-6 font-light">Sincronização de calendários</td>
+                            <td class="py-2.5 font-light">Gratuito</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2.5 pr-6 font-medium" style="color:#ded2ff">OAuth 2.0</td>
+                            <td class="py-2.5 pr-6 font-light">Autenticação segura</td>
+                            <td class="py-2.5 font-light">Gratuito (protocolo, sem custo de licença)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="font-sans text-xs font-light italic max-w-2xl" style="color:rgba(255,255,255,0.45)">Os itens marcados como gratuitos usam os planos free desses serviços. Se o uso crescer além dos limites gratuitos (mais alunas, mais tráfego, mais dados), o custo dessas ferramentas pode aumentar.</p>
+        </div>
+    </section>
+
+    <!-- GARANTIA -->
+    <section class="section-gap px-6 md:px-10 max-w-7xl mx-auto">
+        <div class="reveal">
+            <p class="label-ui mb-4" style="color:#5a28b9">06 — Garantia</p>
+            <h2 class="font-serif italic text-[clamp(32px,5vw,64px)] leading-[0.92] tracking-tight max-w-4xl mb-10" style="color:#fefefe">
+                60 dias de
+                <span class="hand-underline" style="color:#ac78ed">garantia
+                    <svg viewBox="0 0 220 14" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                        <path d="M2 9C55 2 120 13 175 5C195 1 208 10 218 7" stroke="#ac78ed" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                </span> após entrar no ar
+            </h2>
+            <div class="garantia-badge-green max-w-3xl">
+                <p class="font-sans text-sm font-light leading-relaxed" style="color:rgba(222,255,230,0.9)">
+                    Após a entrada em operação (D+70), você tem <strong style="color:#4ade80">60 dias de garantia</strong>: qualquer bug ou comportamento fora do que está especificado nesta proposta é corrigido por minha conta, sem custo adicional.
+                </p>
+                <p class="font-sans text-sm font-light leading-relaxed mt-4" style="color:rgba(222,255,230,0.8)">
+                    O que não entra na garantia — por ser ajuste de escopo, e não correção — é tratado à parte, via plano de manutenção mensal ou pacote de horas: novas funcionalidades, mudanças de especificação e evolução da plataforma após os 60 dias iniciais.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- O QUE PRECISAMOS / FORA DO ESCOPO -->
+    <section class="section-gap px-6 md:px-10 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-6 reveal-children">
+            <!-- O que precisamos -->
+            <div class="rounded-organic p-8 md:p-10" style="background:#27273a;border:1px solid rgba(172,120,237,0.2)">
+                <p class="label-ui mb-6" style="color:#5a28b9">O que Precisamos de Você</p>
+                <p class="font-sans text-sm font-light mb-6" style="color:rgba(255,255,255,0.5)">Para manter o cronograma:</p>
+                <ul class="space-y-3">
+                    <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.7)">
+                        <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed"></span>
+                        Acesso às planilhas, sistemas ou registros atuais de alunas, financeiro e contatos
+                    </li>
+                    <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.7)">
+                        <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed"></span>
+                        Definição de quem, na equipe, participará da validação de cada módulo
+                    </li>
+                    <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.7)">
+                        <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed"></span>
+                        Disponibilidade para 3 a 4 reuniões curtas de alinhamento ao longo do projeto
+                    </li>
+                    <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.7)">
+                        <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed"></span>
+                        Acesso às contas de Google Calendar e Outlook que serão sincronizadas
+                    </li>
+                    <li class="flex items-start gap-3 font-sans text-sm font-light" style="color:rgba(255,255,255,0.7)">
+                        <span class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style="background:#ac78ed"></span>
+                        Aprovação dos critérios que vão compor o Health Score (apresento um modelo inicial já na reunião de alinhamento)
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Fora do escopo -->
+            <div class="rounded-organic p-8 md:p-10" style="background:#27273a;border:1px solid rgba(172,120,237,0.1)">
+                <p class="label-ui mb-6" style="color:rgba(172,120,237,0.5)">O que Não Está no Escopo</p>
+                <p class="font-sans text-sm font-light mb-6" style="color:rgba(255,255,255,0.4)">Para que não haja surpresas:</p>
+                <ul class="space-y-3">
+                    <li class="font-sans text-sm font-light" style="color:rgba(255,255,255,0.45)">✗ Migração histórica de dados de sistemas legados além do previamente mapeado na fase de alinhamento</li>
+                    <li class="font-sans text-sm font-light" style="color:rgba(255,255,255,0.45)">✗ Criação de conteúdo, gestão de tráfego pago ou qualquer entrega de marketing</li>
+                    <li class="font-sans text-sm font-light" style="color:rgba(255,255,255,0.45)">✗ Emissão fiscal, contabilidade ou integrações com sistemas de contabilidade</li>
+                    <li class="font-sans text-sm font-light" style="color:rgba(255,255,255,0.45)">✗ Aplicativo mobile nativo (a plataforma será responsiva, acessível via navegador em qualquer dispositivo)</li>
+                    <li class="font-sans text-sm font-light" style="color:rgba(255,255,255,0.45)">✗ Suporte técnico ao vivo fora do horário comercial</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Privacidade -->
+        <div class="reveal mt-6 rounded-organic p-8 md:p-10" style="background:#27273a;border:1px solid rgba(172,120,237,0.1)">
+            <p class="label-ui mb-4" style="color:rgba(172,120,237,0.5)">Privacidade e Segurança dos Dados</p>
+            <p class="font-sans text-sm font-light leading-relaxed max-w-3xl" style="color:rgba(255,255,255,0.45)">
+                Todos os dados das alunas — incluindo informações de jornada, financeiro e engajamento — serão tratados em conformidade com a LGPD (Lei nº 13.709/2018). O Ecossistema Intencional permanece como controlador dos dados das suas alunas; a plataforma é construída com os controles de acesso necessários para que apenas os usuários autorizados vejam cada tipo de informação.
+            </p>
+        </div>
+    </section>
+
+    <!-- PRÓXIMOS PASSOS -->
+    <section id="proximos-passos" class="section-gap px-6 md:px-10 max-w-7xl mx-auto">
+        <div class="reveal">
+            <p class="label-ui mb-4" style="color:#5a28b9">07 — Próximos Passos</p>
+            <h2 class="font-serif italic text-[clamp(36px,6vw,80px)] leading-[0.92] tracking-tight max-w-4xl mb-10" style="color:#fefefe">
+                Vamos
+                <span class="hand-underline" style="color:#ac78ed">começar
+                    <svg viewBox="0 0 300 14" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                        <path d="M2 6C60 12 130 0 200 10C240 14 275 3 298 8" stroke="#ac78ed" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                </span>?
+            </h2>
+        </div>
+
+        <div class="relative max-w-2xl reveal-children">
+            <div class="timeline-line"></div>
+            <div class="flex gap-8 pb-12 relative">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center z-10" style="background:#ac78ed">
+                    <span class="font-serif italic text-lg" style="color:#1f1f23">1</span>
+                </div>
+                <div class="pt-2">
+                    <h3 class="font-serif italic text-xl md:text-2xl mb-2" style="color:#fefefe">Confirme a aprovação</h3>
+                    <p class="font-sans text-sm font-light leading-relaxed" style="color:rgba(255,255,255,0.5)">
+                        Esta condição comercial (R$ 10.997,00 na implementação) é válida até 20/07/2026. Para avançar, é só me confirmar que a proposta está aprovada.
+                    </p>
+                </div>
+            </div>
+            <div class="flex gap-8 pb-12 relative">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center z-10" style="background:#ac78ed">
+                    <span class="font-serif italic text-lg" style="color:#1f1f23">2</span>
+                </div>
+                <div class="pt-2">
+                    <h3 class="font-serif italic text-xl md:text-2xl mb-2" style="color:#fefefe">Reunião de alinhamento inicial</h3>
+                    <p class="font-sans text-sm font-light leading-relaxed" style="color:rgba(255,255,255,0.5)">
+                        A partir da aprovação, já te chamo para marcar a reunião de alinhamento inicial (D+7).
+                    </p>
+                </div>
+            </div>
+            <div class="flex gap-8 relative">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center z-10" style="background:#5a28b9">
+                    <span class="font-serif italic text-lg" style="color:#fefefe">3</span>
+                </div>
+                <div class="pt-2">
+                    <h3 class="font-serif italic text-xl md:text-2xl mb-2" style="color:#fefefe">Estruturação dos módulos</h3>
+                    <p class="font-sans text-sm font-light leading-relaxed" style="color:rgba(255,255,255,0.5)">
+                        Seguimos com a estruturação dos módulos, com atualizações periódicas suas sobre o andamento. Qualquer dúvida sobre escopo, prazo ou investimento, me chama — sigo à disposição para ajustar o que for preciso antes de começarmos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section-gap px-6 md:px-10 max-w-7xl mx-auto pb-0">
+        <div class="reveal">
+            <div class="glow-top rounded-[48px] p-10 md:p-20 text-center relative overflow-hidden" style="background:#5a28b9">
+                <p class="label-ui mb-6" style="color:rgba(255,255,255,0.5)">Pronta para começar?</p>
+                <h2 class="font-serif italic text-[clamp(32px,5vw,72px)] leading-[0.92] tracking-tight mb-4 max-w-3xl mx-auto" style="color:#fefefe">
+                    Transforme a gestão manual em estrutura.
+                </h2>
+                <p class="font-serif text-[clamp(20px,3vw,36px)] leading-none tracking-tight mb-10" style="color:#ded2ff">Condição válida até 20 de julho de 2026.</p>
+                <a href="https://wa.me/5571985023516" target="_blank" class="btn-pill inline-block px-10 md:px-14 py-4 md:py-5 font-sans text-sm md:text-base font-medium tracking-wide" style="background:#fefefe;color:#5a28b9">
+                    Falar no WhatsApp
+                </a>
+                <p class="font-hand text-2xl mt-6" style="color:rgba(255,255,255,0.4)">Em 70 dias sua operação muda</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="mt-40" style="background:#27273a">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 pt-20 pb-10">
+            <div class="flex flex-col md:flex-row md:justify-between gap-12 mb-16">
+                <div class="max-w-md">
+                    <p class="font-serif italic text-4xl md:text-5xl tracking-tight mb-4" style="color:#ac78ed">Ana | Automações e IA</p>
+                    <p class="font-sans text-sm font-light leading-relaxed" style="color:rgba(255,255,255,0.4)">
+                        Estou à disposição para ajustar qualquer detalhe antes de você decidir.
+                    </p>
+                </div>
+                <div class="flex flex-col md:items-end gap-2">
+                    <p class="label-ui mb-3" style="color:rgba(172,120,237,0.4)">Contato</p>
+                    <a href="mailto:anabraga.automacoes@gmail.com" class="font-sans text-sm" style="color:rgba(255,255,255,0.5)">anabraga.automacoes@gmail.com</a>
+                    <a href="https://www.anaautomacoes.com.br" target="_blank" rel="noopener" class="font-sans text-sm" style="color:rgba(255,255,255,0.5)">www.anaautomacoes.com.br</a>
+                    <a href="https://wa.me/5571985023516" target="_blank" class="btn-pill inline-block mt-4 label-ui px-6 py-2.5 transition-all duration-300" style="border:1px solid rgba(172,120,237,0.25);color:#ac78ed" onmouseover="this.style.background='#5a28b9';this.style.color='#fefefe'" onmouseout="this.style.background='transparent';this.style.color='#ac78ed'">
+                        WhatsApp
+                    </a>
+                </div>
+            </div>
+            <div class="border-t pt-6 flex flex-col md:flex-row md:justify-between gap-4" style="border-color:rgba(172,120,237,0.1)">
+                <p class="label-ui" style="color:rgba(255,255,255,0.2)">&copy; 2026 Ana | Automações e IA. Todos os direitos reservados.</p>
+                <p class="label-ui" style="color:rgba(255,255,255,0.2)">Proposta Confidencial &mdash; Gabriela Bestetti</p>
+            </div>
+            <p class="font-sans text-xs font-light mt-4" style="color:rgba(255,255,255,0.2)">Dados coletados em conformidade com a LGPD (Lei nº 13.709/2018), com base no consentimento explícito do titular.</p>
+        </div>
+    </footer>
+
+    <script>
+        const observerOptions = { threshold: 0.12, rootMargin: '0px 0px -40px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.reveal, .reveal-children').forEach(el => observer.observe(el));
+
+        function scrollGallery(dir) {
+            const gallery = document.getElementById('timeline-gallery');
+            const cardWidth = gallery.querySelector(':first-child').offsetWidth + 24;
+            gallery.scrollBy({ left: dir * cardWidth, behavior: 'smooth' });
+        }
+        function toggleMobileNav() { document.getElementById('mobile-nav').classList.toggle('hidden'); }
+        function closeMobileNav() { document.getElementById('mobile-nav').classList.add('hidden'); }
+
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            navbar.style.borderBottom = scrollY > 100 ? '1px solid rgba(172,120,237,0.1)' : '1px solid transparent';
+            lastScroll = scrollY;
+        });
+
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => { if (window.scrollY >= section.offsetTop - 120) current = section.getAttribute('id'); });
+            navLinks.forEach(link => {
+                link.style.opacity = link.getAttribute('href') === '#' + current ? '1' : '0.5';
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            });
+        });
+    </script>
+</body>
+</html>
